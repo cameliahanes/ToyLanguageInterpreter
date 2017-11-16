@@ -1,0 +1,54 @@
+Exe Stack: 
+a = 2 + 3 * 5
+(b = a + 1;print(b))
+Symbol Table: 
+
+Out: 
+
+File Table
+
+Heap
+
+Exe Stack: 
+(b = a + 1;print(b))
+Symbol Table: 
+a -> 17
+Out: 
+
+File Table
+
+Heap
+
+Exe Stack: 
+b = a + 1
+print(b)
+Symbol Table: 
+a -> 17
+Out: 
+
+File Table
+
+Heap
+
+Exe Stack: 
+print(b)
+Symbol Table: 
+a -> 17
+b -> 18
+Out: 
+
+File Table
+
+Heap
+
+Exe Stack: 
+
+Symbol Table: 
+a -> 17
+b -> 18
+Out: 
+18
+File Table
+
+Heap
+

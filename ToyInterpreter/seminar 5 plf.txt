@@ -1,0 +1,141 @@
+Seminar 5 - Procesarea listelor in LISP
+
+=> atomi: simboluri si numere
+=> o secventa atomi => liste => liniare si neliniare
+=> notatie prefixata
+
+(+ a b)
+(- a b)
+(* a b)
+(/ a b)
+(mod a b)
+(min a b)
+(max a b)
+(equal a b) - true if nrs are equal and false otherwise
+(incf a b) => a + b
+(decf a b) => a - b
+
+Functii petru prelucrare liste:
+(cons e1 e2) => (e1 e2) => (1 2 3) = (cons 1( cons 2( cons 3 nil)))
+(list e1 e2) => (e1 e2) => (1 2 3) = (list 1 2 3)
+(Reverse l) - reverse a lost at superficial level => (reverse ln) = (3 2(2 3(4 5)) 1 10)
+(atom l) - return true if e = atom and false(nil) otherwise
+(CAR l) => returns l1
+(CDR l) => returns from l2 to ln 
+
+Definitia unei functii:
+(DEFUN nameFunction
+(param1 ... paramn
+(body_function
+(end()())
+
+
+conditie simpla => if
+conditie multipla => COND
+
+(if
+	(conditie)
+		(instr1)
+		(instr2)
+)
+
+(COND
+	(cond1 ... instr1)
+	(cond2 ... instr2)
+	...
+	(condn-1 ... instrn-1)
+	(T ... instrn)
+)
+
+stabilirea valorii unei variabile setq
+(setq numeVariablila valoare)
+(setq rez (numeFunctie param_functiei))
+
+- media aritmetica a 3 numere date ca parametri
+
+(DEFUN arithMean(a b c)
+(/(+ a b c) 3))
+
+(DEFUN main(a b c)
+setq result(arithMean(a b c))
+)
+
+(write
+(main 10 20 30)
+)
+
+sau
+
+
+(setq result(arithMean(10 20 30))
+(write result)
+
+- common lisp 2.49
+- LispWorks
+
+- factorialul unui numar
+Math. model
+factorial(x) = x * factorial(x - 1), for x diff from 0
+
+(DEFUN factorial(x) 
+	(COND (EQUAL x 0) 1 )
+	(T (* x factorial(- x 1)))
+) 
+
+- interclasarea a doua seturi, fara pastrarea duplicatelor
+s1 = (2 3 4 5 7)
+s2 = (1 2 5 6 9)
+=> (1 2 3 4 5 6 7 9)
+
+
+interclasare((l1 ... ln), (L1 ... Ln)) = {
+										interclasare(l1 U interclasare(l2 ... ln), (L1 ... Ln)) if l1 < L1
+										interclasare(L1 U interclasare(l1 ... ln), (L2 ... Ln)) if L1 < l1
+										l1 U interclasare((l2 ... ln), (L2 ... Ln)) if l1 == L2
+										(l1 .. ln) if L is void set 
+										(L1 ... Ln) if l is void set
+										}
+										
+(DEFUN interclasare(l p)
+	(COND 
+		((null p) l)
+		((null l) p)
+		((EQUAL (CAR l) (CAR p)))
+			(CONS (CAR 1)
+				(interclasare (CDR l) (CDR p))
+				)
+		(( > (CAR l) (CAR p))
+			(CONS (CAR p) interclasare(l (CDR p))
+		)
+		(( > (CAR p) (CAR l)
+			(CONS (CAR l) interclasare p (CDR l)))
+		))
+	)
+)									
+	
+	
+- stergerea unei valori dintr-o linie neliniara, la orice nivel
+L = ( 2 10 ( 3 10 (4 10 (10 11) 2)) 5) => e = 10
+LR = (2 (3 (4 (11) 2)) 5)
+
+Math. model 
+
+remove([l1, ... , ln], E) = {
+							[], n = 0
+							remove([l2, ..., ln], E) l1 - atom, l2 = E
+							l1 U remove([l2, ..., ln] l1 - atom, l2 different from E)
+							remove(l, E) U remove([l2, ..., ln], E), l2 = list 
+							}
+
+(DEFUN removeElem(l e)
+(COND ((null l) nil)
+(AND (equal (CAR l) e) (atom(CAR l)))
+(removeElem (CDR l) e))
+
+(AND (NOT (EQUAL (CAR l) e))  (atom (CAR l)))
+(CONS (CAR l)
+(removeElem (CDR l) e))
+((listp (CAR l))
+(CONS(remove (CAR l) e) (removeElem(CDR l) e))))
+
+
