@@ -9,8 +9,6 @@ public class IfStmt implements IStmt{
 	private IStmt thenS;
 	private IStmt elseS;
 	
-	// TODO
-	
 	public IfStmt(Exp e, IStmt then, IStmt elsee){
 		this.exp = e;
 		this.thenS = then;
