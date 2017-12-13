@@ -34,7 +34,7 @@ public class CloseRFileStmt implements IStmt{
 		
 		/// the corresponding buffered reader is found as a second member of our tuple
 		entry.getSecond().close();
-		return state;
+		return null;
 	}
 	
 	@Override
