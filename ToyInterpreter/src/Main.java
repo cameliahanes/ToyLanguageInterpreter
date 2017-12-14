@@ -171,7 +171,7 @@ public class Main {
 
         AssignStmt as = new AssignStmt("v", new ConstExp(6));
         IStmt auxlab5ex3 = new CompStmt(new WhileStmt(new BooleanExp(new VarExp("v"),
-                new ConstExp(4), ">"), new CompStmt(new PrintStmt(new VarExp("v")),
+                new ConstExp(4), ">="), new CompStmt(new PrintStmt(new VarExp("v")),
                 new AssignStmt("v", new ArithExp('-', new VarExp("v"), new ConstExp(1))))),
                 new PrintStmt(new VarExp("v")));
 
@@ -212,6 +212,33 @@ public class Main {
                 )
         );
 
+        IStmt lab6ex2 = new CompStmt(
+                new CompStmt(
+                        new AssignStmt("v", new ConstExp(10)),
+                        new NewStmt("a", new ConstExp(22))
+                ),
+                new CompStmt(
+                        new ForkStmt(
+                                new CompStmt(
+                                        new WriteHeapStmt("a", new ConstExp(30)),
+                                        new CompStmt(
+                                                new AssignStmt("v", new ConstExp(32)),
+                                                new CompStmt(
+                                                        new PrintStmt(new VarExp("v")),
+                                                        new PrintStmt(new ReadHeapExp("a"))
+                                                )
+                                        )
+                                )
+                        ),
+                        new ForkStmt(new CompStmt(
+                                new PrintStmt(new VarExp("v")),
+                                new PrintStmt(new ReadHeapExp("a")))
+                        )
+                )
+        );
+
+
+
         TextMenu menu = new TextMenu(new MyDictionary<String, Command>(new HashMap<String, Command>()));
         menu.addCommand(new ExitCommand("0", "Exit"));
         menu.addCommand(new RunExample("1", lab2ex1.toString(), getNewController(lab2ex1)));
@@ -224,6 +251,8 @@ public class Main {
         menu.addCommand(new RunExample("8", lab5ex2.toString(), getNewController(lab5ex2)));
         menu.addCommand(new RunExample("9", lab5ex3.toString(), getNewController(lab5ex3)));
         menu.addCommand(new RunExample("10", lab6ex1.toString(), getNewController(lab6ex1)));
+        menu.addCommand(new RunExample("11", lab6ex2.toString(), getNewController(lab6ex2)));
+
         menu.show();
     }
 
